@@ -369,4 +369,15 @@ function showEventModal(eventId) {
     }
 
     modal.style.display = 'block';
-} 
+}
+
+// Scroll down slightly when the page loads
+window.addEventListener('load', function() {
+    // Scroll down by 500 pixels after a short delay to ensure everything is loaded
+    setTimeout(function() {
+        window.scrollTo({
+            top: 500,
+            behavior: 'smooth'
+        });
+    }, 500);
+}); 
