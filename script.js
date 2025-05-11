@@ -49,40 +49,10 @@ document.addEventListener('DOMContentLoaded', function() {
     const contactForm = document.getElementById('contactForm');
     if (contactForm) {
         contactForm.addEventListener('submit', function(e) {
-            e.preventDefault();
-            
-            // Get form data
-            const formData = new FormData(contactForm);
-            
-            // Send form data to server
-            fetch('process_form.php', {
-                method: 'POST',
-                body: formData
-            })
-            .then(response => {
-                if (response.ok) {
-                    showMessage('Message sent successfully!', 'success');
-                    contactForm.reset();
-                } else {
-                    throw new Error('Network response was not ok');
-                }
-            })
-            .catch(error => {
-                showMessage('Error sending message. Please try again.', 'error');
-                console.error('Error:', error);
-            });
+            // Let Formspree handle the form submission
+            // We'll just show a loading message
+            showMessage('Sending message...', 'info');
         });
-    }
-
-    // Check URL for status message
-    const urlParams = new URLSearchParams(window.location.search);
-    const status = urlParams.get('status');
-    const message = urlParams.get('message');
-    
-    if (status === 'success') {
-        showMessage('Message sent successfully!', 'success');
-    } else if (status === 'error') {
-        showMessage(message || 'Error sending message. Please try again.', 'error');
     }
 });
 
