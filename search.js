@@ -56,11 +56,32 @@ document.addEventListener('DOMContentLoaded', function() {
             return;
         }
 
-        // Filter search data based on query
-        const results = searchData.filter(item => 
-            item.title.toLowerCase().includes(query) || 
-            item.description.toLowerCase().includes(query)
-        );
+        // Search across all pages
+        const results = [];
+        
+        // Search through each page's content
+        for (const [page, pageData] of Object.entries(searchableContent)) {
+            // Search in page title
+            if (pageData.title.toLowerCase().includes(query)) {
+                results.push({
+                    title: pageData.title,
+                    url: page,
+                    description: 'Page title match'
+                });
+            }
+
+            // Search in sections
+            pageData.sections.forEach(section => {
+                if (section.title.toLowerCase().includes(query) || 
+                    section.content.toLowerCase().includes(query)) {
+                    results.push({
+                        title: section.title,
+                        url: page + section.url,
+                        description: section.content.substring(0, 100) + '...'
+                    });
+                }
+            });
+        }
 
         // Display results
         displayResults(results);
